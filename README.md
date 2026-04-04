@@ -12,11 +12,11 @@ The platform is designed primarily as an educational cybersecurity project imple
 
 The main objectives of ReConan are:
 
-• Aggregate intelligence from multiple OSINT sources
-• Store investigation data in a structured database
-• Discover relationships between digital entities
-• Provide investigators with an interactive graph interface
-• Maintain investigation logs and exportable reports
+* Aggregate intelligence from multiple OSINT sources  
+* Store investigation data in a structured database  
+* Discover relationships between digital entities  
+* Provide investigators with an interactive graph interface  
+* Maintain investigation logs and exportable reports  
 
 ReConan focuses on **digital reconnaissance and relationship analysis**, allowing investigators to explore how domains, IP addresses, emails, and online identities connect.
 
