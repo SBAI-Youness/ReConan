@@ -1,7 +1,11 @@
 package org.reconan.config;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class DatabaseConfig {
-    public static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=TestDB;encrypt=true;trustServerCertificate=true";
-    public static final String USER = "sa";
-    public static final String PASSWORD = "Azerty123@";
+    private static final Dotenv dotenv = Dotenv.load();
+
+    public static final String URL = dotenv.get("DB_URL");
+    public static final String USER = dotenv.get("DB_USER");
+    public static final String PASSWORD = dotenv.get("DB_PASSWORD");
 }
