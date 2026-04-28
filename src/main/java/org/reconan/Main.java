@@ -3,6 +3,7 @@ package org.reconan;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.reconan.database.DatabaseConnection;
 
@@ -14,6 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("ReConan");
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
         
         String statusText;
         try (Connection connection = DatabaseConnection.getConnection()) {
