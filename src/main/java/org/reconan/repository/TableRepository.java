@@ -1,6 +1,6 @@
 package org.reconan.repository;
 
-import org.reconan.db.DatabaseConnection;
+import org.reconan.database.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

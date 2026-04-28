@@ -1,4 +1,4 @@
-package org.reconan.db;
+package org.reconan.database;
 
 import org.reconan.config.DatabaseConfig;
 
