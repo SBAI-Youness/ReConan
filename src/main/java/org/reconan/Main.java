@@ -1,30 +1,15 @@
 package org.reconan;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import org.reconan.repository.TableRepository;
 
 public class Main {
     public static void main(String[] args) {
-        // Set your SQL Server Configuration (Database Name, Username, Password, ...)
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=TestDB;encrypt=true;trustServerCertificate=true";
-        String user = "sa";
-        String password = "Azerty123@";
 
-        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+        System.out.println("Starting application...");
 
-            System.out.println("Connected successfully!");
+        TableRepository repository = new TableRepository();
+        repository.printAllTables();
 
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT name FROM sys.tables");
-
-            while (rs.next()) {
-                System.out.println("Table: " + rs.getString("name"));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println("Done.");
     }
 }
