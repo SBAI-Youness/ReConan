@@ -34,3 +34,6 @@ ReConan follows a modular, **layered architecture**:
 2. **Application Layer**: Contains the Investigation Services, Transform Engine, and Graph Manager.
 3. **Data Layer**: Houses Repositories, DAOs, and Entity Models.
 4. **Database**: SQL Server storage for targets, entities, relationships, and investigation logs.
+
+## Contributing
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to fork the repository, set up your `.env` file, compile the project using `mvn javafx:run`, and submit Pull Requests.
