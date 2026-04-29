@@ -1,3 +1,0 @@
-# TODO
-
-* Generate a logo
