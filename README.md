@@ -13,7 +13,7 @@
 
 ReConan is a **Desktop-based OSINT and cyber investigation platform**. It aggregates intelligence from multiple public data sources, storing and visualizing relationships between digital entities (such as domains, IPs, emails, and usernames).
 
-> **Fun Fact:** The name *ReConan* is just a highly sophisticated portmanteau of **Reconnaissance** and **Conan the Detective**. Because who better to investigate cyber threats than a brilliant, permanently-young anime detective? 🔍
+> **Fun Fact:** The name *ReConan* is just a highly sophisticated portmanteau of **Reconnaissance** and **Conan the Detective**. Because who better to investigate cyber threats than a brilliant, permanently-young anime detective?
 
 ## Use Case
 ReConan is designed for **digital reconnaissance and relationship analysis**. Investigators can use the platform to seamlessly connect the dots between various online identities and infrastructure elements. It serves as an interactive environment to discover, store, and explore entity relationships through a dynamic investigation graph.
