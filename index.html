@@ -3,60 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReConan</title>
-    <meta name="description" content="ReConan is a Desktop-based OSINT and cyber investigation platform.">
+    <title>ReConan - OSINT & Cyber Investigation Platform</title>
+    <meta name="description" content="A professional-grade OSINT platform for relationship visualization and digital reconnaissance, built with Java and SQL Server.">
     <link rel="icon" type="image/png" href="assets/icon.png">
-    <style>
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: #1d2634;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            text-align: center;
-            max-width: 600px;
-            padding: 2rem;
-        }
-
-        .logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 1.5rem;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin: 0 0 1rem 0;
-            font-weight: 600;
-        }
-
-        .description {
-            font-size: 1.1rem;
-            color: #849aa7;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .description strong {
-            color: #ffffff;
-            font-weight: 500;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <div class="container">
-        <img src="assets/icon.png" alt="ReConan Logo" class="logo">
-        <h1>ReConan</h1>
-        <p class="description">
-            A Desktop-based OSINT and Cyber Investigation Platform.
-        </p>
-    </div>
+
+    <nav>
+        <div class="container nav-content">
+            <a href="#" class="nav-brand">
+                <img src="assets/icon.png" alt="ReConan">
+                <span>ReConan</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#use-case">Use Case</a></li>
+                <li><a href="#demos">Demos</a></li>
+                <li><a href="#contributing">Contributing</a></li>
+            </ul>
+            <a href="https://github.com/SBAI-Youness/ReConan" class="btn btn-primary" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+                GitHub
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <img src="assets/icon.png" alt="ReConan Logo" class="hero-icon">
+            <h1>Investigate the Unseen.</h1>
+            <p>ReConan is a professional OSINT platform designed for digital reconnaissance, relationship visualization, and multi-source entity extraction.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2.5rem;">
+                <a href="#contributing" class="btn btn-primary">Getting Started</a>
+                <a href="https://github.com/SBAI-Youness/ReConan" class="btn btn-secondary" target="_blank">View Source</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="about">
+        <div class="container">
+            <h2>The Platform</h2>
+            <div class="grid">
+                <div class="card">
+                    <i data-lucide="layers" size="24"></i>
+                    <h3>Modular Architecture</h3>
+                    <p>Built with a strictly decoupled layered architecture separating the UI (JavaFX), Application logic, and Data layers.</p>
+                </div>
+                <div class="card">
+                    <i data-lucide="database" size="24"></i>
+                    <h3>Local-First Data</h3>
+                    <p>Powered by SQL Server to store targets, entities, and logs locally, keeping your investigation data secure and private.</p>
+                </div>
+                <div class="card">
+                    <i data-lucide="code" size="24"></i>
+                    <h3>Enterprise Ready</h3>
+                    <p>Utilizes robust technologies like JDBC, Jackson, and JGraphT for high-performance data processing and visualization.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-case">
+        <div class="container">
+            <h2>Primary Use Cases</h2>
+            <div class="grid">
+                <div class="card">
+                    <i data-lucide="share-2" size="24"></i>
+                    <h3>Relationship Visualization</h3>
+                    <p>Connect the dots between IPs, domains, and emails using an interactive graph engine for deep investigation analysis.</p>
+                </div>
+                <div class="card">
+                    <i data-lucide="fingerprint" size="24"></i>
+                    <h3>Digital Reconnaissance</h3>
+                    <p>Aggregate intelligence from multiple public sources to build comprehensive digital footprints of entities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="demos">
+        <div class="container">
+            <h2>Platform Demos</h2>
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <i data-lucide="layout" size="32"></i>
+                    <span>Dashboard Mockup</span>
+                </div>
+                <div class="demo-item">
+                    <i data-lucide="network" size="32"></i>
+                    <span>Graph View Mockup</span>
+                </div>
+                <div class="demo-item">
+                    <i data-lucide="users" size="32"></i>
+                    <span>Entity Manager Mockup</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contributing">
+        <div class="container">
+            <h2>Developer Guide</h2>
+            <div class="contribution-section">
+                <div class="step">
+                    <h4>1. Fork & Clone</h4>
+                    <p>Create your own copy of the repository and clone it to your local machine.</p>
+                    <div class="code-block">git clone https://github.com/YOUR-USERNAME/ReConan.git</div>
+                </div>
+                <div class="step">
+                    <h4>2. Configure Environment</h4>
+                    <p>Copy <code>.env.example</code> to <code>.env</code> and fill in your SQL Server credentials.</p>
+                    <div class="code-block">Copy-Item .env.example .env</div>
+                </div>
+                <div class="step">
+                    <h4>3. Build & Run</h4>
+                    <p>Launch the application using Maven and the JavaFX plugin:</p>
+                    <div class="code-block">mvn javafx:run</div>
+                </div>
+                <div class="step">
+                    <h4>4. Contribution</h4>
+                    <p>Ensure your changes follow the modular style and submit a Pull Request with a detailed description.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <script>document.write(new Date().getFullYear());</script> ReConan Project. Distributed under the MIT License.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
