@@ -24,6 +24,7 @@ ReConan is designed for **digital reconnaissance and relationship analysis**. In
 - **Graph Visualization**: JavaFX SmartGraph
 - **Database**: SQL Server
 - **Data Access**: JDBC
+- **JSON Parsing**: Jackson Databind
 - **Build Tool**: Maven
 
 ## Architecture
@@ -32,6 +33,9 @@ ReConan follows a clean, **layered architecture** designed for modularity and ma
 ```mermaid
 graph TD
     UI[User Interface - JavaFX / FXML] --> Controller[Controllers]
+    Controller --> Service[Investigation Service]
+    Service --> Transform[Transform Registry / OSINT Layer]
+    Transform --> API[External APIs: Shodan, Hunter.io, etc.]
     Controller --> Graph[Graph Manager - SmartGraph]
     Controller --> Repo[Repositories]
     Graph --> Model[Entity Models]
@@ -44,17 +48,21 @@ graph TD
    - Uses **FXML** for layout and **CSS** for professional styling.
    - **ViewLoader** manages scene transitions and FXML loading.
 2. **Controller Layer**:
-   - Manages UI events and coordinates between the Graph Manager and Data Repositories.
+   - Manages UI events and coordinates between the Graph Manager, Data Repositories, and Enrichment Services.
    - Implements complex session-to-database persistence logic (ID mapping).
-3. **Graph Management**:
+3. **OSINT & Transform Layer**:
+   - **InvestigationService**: Orchestrates the data enrichment process.
+   - **TransformRegistry**: A modular registry of OSINT adapters (Shodan, Hunter.io, etc.).
+   - **Transforms**: Concrete implementations that communicate with external APIs to discover new entities and properties.
+4. **Graph Management**:
    - Built on **JavaFX SmartGraph**, providing a dynamic, force-directed graph environment.
    - **GraphManager** encapsulates graph logic, custom styling, and layout physics.
-4. **Data Access Layer (Repositories)**:
+5. **Data Access Layer (Repositories)**:
    - Uses the **Repository Pattern** with JDBC for database interactions.
    - Handles CRUD operations for investigations, entities, and relationships.
-5. **Entity Models**:
+6. **Entity Models**:
    - Plain Java Objects (POJOs) representing the core domain: `Investigation`, `Entity`, and `Relationship`.
-6. **Persistence Layer**:
+7. **Persistence Layer**:
    - **SQL Server** database with a relational schema optimized for entity-relationship mapping.
    - **DatabaseManager** handles automated schema initialization and connectivity.
 
