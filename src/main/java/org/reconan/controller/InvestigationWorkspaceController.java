@@ -23,7 +23,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
 import org.reconan.graph.GraphManager;
 import org.reconan.model.Entity;
 import org.reconan.model.EntityType;
@@ -32,11 +31,13 @@ import org.reconan.model.Relationship;
 import org.reconan.repository.EntityRepository;
 import org.reconan.repository.RelationshipRepository;
 import org.reconan.repository.InvestigationRepository;
+import org.reconan.service.InvestigationService;
 import org.reconan.ui.ViewLoader;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -61,6 +62,9 @@ public class InvestigationWorkspaceController {
     private VBox actionPanel;
 
     @FXML
+    private Button runTransformButton;
+
+    @FXML
     private StackPane zoomOverlay;
 
     @FXML
@@ -80,6 +84,7 @@ public class InvestigationWorkspaceController {
     private final EntityRepository entityRepository = new EntityRepository();
     private final RelationshipRepository relationshipRepository = new RelationshipRepository();
     private final InvestigationRepository investigationRepository = new InvestigationRepository();
+    private final InvestigationService investigationService = new InvestigationService();
 
     @FXML
     public void initialize() {
@@ -286,6 +291,11 @@ public class InvestigationWorkspaceController {
         // Show action panel
         actionPanel.setVisible(true);
         actionPanel.setManaged(true);
+
+        // Conditional visibility for Run Transform button
+        boolean hasTransforms = investigationService.canEnrich(entity.getType());
+        runTransformButton.setVisible(hasTransforms);
+        runTransformButton.setManaged(hasTransforms);
 
         addDetailLabel("Type", entity.getType().getLabel());
         addDetailLabel("Value", entity.getValue());
@@ -592,6 +602,52 @@ public class InvestigationWorkspaceController {
     private void returnToMainMenu() {
         System.out.println("Terminal: Returning to Main Menu...");
         ViewLoader.loadView("/fxml/main_menu.fxml", "ReConan - Main Menu");
+    }
+
+    @FXML
+    private void handleRunTransform() {
+        if (selectedEntity == null) return;
+
+        Entity target = selectedEntity;
+        System.out.println("Terminal: Run Transform called on [" + target.getType() + "] -> \"" + target.getValue() + "\"");
+
+        new Thread(() -> {
+            List<Entity> results = investigationService.enrich(target);
+
+            Platform.runLater(() -> {
+                for (Entity result : results) {
+                    result.setId(entityIdCounter++);
+                    if (currentInvestigation != null) {
+                        result.setInvestigationId(currentInvestigation.getId());
+                    }
+                    graphManager.addEntity(result);
+
+                    Relationship rel = new Relationship(
+                        target.getId(),
+                        result.getId(),
+                        result.getType().getLabel().toUpperCase().replace(" ", "_")
+                    );
+                    if (currentInvestigation != null) {
+                        rel.setInvestigationId(currentInvestigation.getId());
+                    }
+                    graphManager.addRelationship(rel);
+                }
+
+                // Always refresh sidebar so enriched properties are visible
+                handleEntitySelection(target);
+
+                String msg = results.isEmpty()
+                    ? "No new nodes added, but entity properties may have been enriched. Check the sidebar."
+                    : "Added " + results.size() + " new node(s) to the graph.";
+
+                Alert done = new Alert(Alert.AlertType.INFORMATION);
+                done.setTitle("Run Transform");
+                done.setHeaderText("Transform complete");
+                done.setContentText(msg);
+                styleDialog(done);
+                done.showAndWait();
+            });
+        }).start();
     }
 
     private void styleDialog(Dialog<?> dialog) {
