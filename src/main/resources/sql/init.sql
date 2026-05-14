@@ -57,16 +57,3 @@ BEGIN
         PRIMARY KEY (relationship_id, property_key)
     );
 END;
-
--- 6. transform_history
-IF OBJECT_ID('transform_history', 'U') IS NULL
-BEGIN
-    CREATE TABLE transform_history (
-        id INT IDENTITY(1,1) PRIMARY KEY,
-        investigation_id INT NOT NULL FOREIGN KEY REFERENCES investigations(id),
-        entity_id INT NOT NULL FOREIGN KEY REFERENCES entities(id),
-        transform_name VARCHAR(255) NOT NULL,
-        status VARCHAR(50) NOT NULL,
-        run_at DATETIME DEFAULT GETDATE()
-    );
-END;
