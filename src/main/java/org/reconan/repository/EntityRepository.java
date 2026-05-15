@@ -5,9 +5,7 @@ import org.reconan.model.Entity;
 import org.reconan.model.EntityType;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Repository for managing Entity persistence.
@@ -18,15 +16,15 @@ public class EntityRepository {
      * Saves all entities for an investigation and returns a map of session IDs to new database IDs.
      * This uses an 'Upsert' logic to preserve existing IDs and creation timestamps.
      */
-    public java.util.Map<Integer, Integer> saveAll(int investigationId, List<Entity> entities) {
-        java.util.Map<Integer, Integer> idMap = new java.util.HashMap<>();
+    public Map<Integer, Integer> saveAll(int investigationId, List<Entity> entities) {
+        Map<Integer, Integer> idMap = new HashMap<>(entities.size());
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             conn.setAutoCommit(false);
 
             try {
                 // 1. Get existing entity IDs in DB for this investigation
-                List<Integer> dbIds = new ArrayList<>();
+                Set<Integer> dbIds = new HashSet<>();
                 String selectIdsSql = "SELECT id FROM entities WHERE investigation_id = ?";
                 try (PreparedStatement pstmt = conn.prepareStatement(selectIdsSql)) {
                     pstmt.setInt(1, investigationId);
@@ -43,7 +41,7 @@ public class EntityRepository {
                 String deletePropsSql = "DELETE FROM entity_properties WHERE entity_id = ?";
                 String insertPropSql = "INSERT INTO entity_properties (entity_id, property_key, property_value) VALUES (?, ?, ?)";
 
-                List<Integer> currentEntityIds = new ArrayList<>();
+                Set<Integer> currentEntityIds = new HashSet<>();
 
                 for (Entity entity : entities) {
                     int oldId = entity.getId();
