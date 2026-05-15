@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.reconan.ui.ViewLoader;
 import org.reconan.util.ConsoleBanner;
 import org.reconan.database.DatabaseConnection;
@@ -19,9 +20,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        // Initialize ViewLoader
+        // Initialize ViewLoader with the primary stage
         ViewLoader.setPrimaryStage(stage);
-        
+
         // Configure stage properties
         setupStage(stage);
 
@@ -45,8 +46,16 @@ public class Main extends Application {
             return;
         }
 
-        // Load splash screen view
-        ViewLoader.loadView("/fxml/splash_screen.fxml", "ReConan - Loading");
+        // Show splash screen on a separate transparent stage
+        showSplashScreen();
+    }
+
+    private void showSplashScreen() {
+        Stage splashStage = new Stage();
+        splashStage.initStyle(StageStyle.TRANSPARENT);
+
+        // Load splash screen view into the transparent stage
+        ViewLoader.loadViewIntoStage(splashStage, "/fxml/splash_screen.fxml", "ReConan - Loading", true);
     }
 
     // Set window title and icon

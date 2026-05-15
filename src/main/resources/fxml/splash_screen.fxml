@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.image.Image?>
 
-<StackPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" 
+<StackPane fx:id="rootPane" prefHeight="300.0" prefWidth="300.0" 
            styleClass="splash-root" 
            xmlns="http://javafx.com/javafx/17" 
            xmlns:fx="http://javafx.com/fxml/1" 

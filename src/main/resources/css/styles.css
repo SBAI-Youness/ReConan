@@ -1,12 +1,11 @@
 /* Global Application Styles */
 .root {
     -fx-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    -fx-background-color: #0f0f0f;
 }
 
 /* Splash Screen Styles */
 .splash-root {
-    -fx-background-color: radial-gradient(center 50% 50%, radius 70%, #1a1a1a, #0a0a0a);
+    -fx-background-color: transparent;
 }
 
 .logo-view {

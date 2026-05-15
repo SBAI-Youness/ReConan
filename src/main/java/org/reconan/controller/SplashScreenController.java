@@ -6,6 +6,7 @@ import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.reconan.ui.ViewLoader;
 
@@ -42,7 +43,12 @@ public class SplashScreenController {
         ParallelTransition animation = new ParallelTransition(fade, scale);
         animation.setOnFinished(event -> {
             System.out.println("Terminal: Splash screen finished. Transitioning to Main Menu...");
-            // Transition to main menu
+            
+            // Close the splash stage
+            Stage splashStage = (Stage) rootPane.getScene().getWindow();
+            splashStage.close();
+            
+            // Transition to main menu on primary stage
             ViewLoader.loadView("/fxml/main_menu.fxml", "ReConan - Main Menu");
         });
         animation.play();

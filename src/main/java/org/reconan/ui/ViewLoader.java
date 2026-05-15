@@ -1,8 +1,11 @@
 package org.reconan.ui;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
@@ -35,10 +38,23 @@ public class ViewLoader {
      * @return The controller instance.
      */
     public static <T> T loadViewWithController(String fxmlPath, String title) {
+        return loadViewIntoStage(primaryStage, fxmlPath, title, false);
+    }
+
+    /**
+     * Loads a view from FXML into a specific stage.
+     * @param stage The stage to load the view into.
+     * @param fxmlPath Path to the FXML file relative to resources.
+     * @param title Title for the stage.
+     * @param transparent Whether the scene should have a transparent fill.
+     * @param <T> The type of the controller.
+     * @return The controller instance.
+     */
+    public static <T> T loadViewIntoStage(Stage stage, String fxmlPath, String title, boolean transparent) {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ViewLoader.class.getResource(fxmlPath)));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
+            Scene scene = transparent ? new Scene(root, Color.TRANSPARENT) : new Scene(root);
             
             // Load global CSS
             String cssPath = "/css/styles.css";
@@ -46,10 +62,14 @@ public class ViewLoader {
                 scene.getStylesheets().add(Objects.requireNonNull(ViewLoader.class.getResource(cssPath)).toExternalForm());
             }
 
-            primaryStage.setTitle(title);
-            primaryStage.setScene(scene);
-            primaryStage.centerOnScreen(); // Always center the window
-            primaryStage.show();
+            stage.setTitle(title);
+            stage.setScene(scene);
+            
+            // Show the stage first so it has dimensions
+            stage.show();
+            
+            // Re-center reaaally perfectly after show
+            centerOnScreen(stage);
             
             return loader.getController();
         } catch (IOException e) {
@@ -57,5 +77,17 @@ public class ViewLoader {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Perfectly centers a stage on the primary screen.
+     * @param stage The stage to center.
+     */
+    private static void centerOnScreen(Stage stage) {
+        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+        double x = bounds.getMinX() + (bounds.getWidth() - stage.getWidth()) / 2.0;
+        double y = bounds.getMinY() + (bounds.getHeight() - stage.getHeight()) / 2.0;
+        stage.setX(x);
+        stage.setY(y);
     }
 }
