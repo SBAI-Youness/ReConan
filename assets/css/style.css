@@ -27,6 +27,8 @@
 
 html {
     scroll-behavior: smooth;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 body {
@@ -35,6 +37,7 @@ body {
     color: var(--c-text);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    max-width: 100vw;
     font-size: 16px;
     line-height: 1.6;
 }
@@ -658,6 +661,8 @@ ul {
     justify-content: center;
     min-height: 440px;
     align-items: center;
+    overflow-x: auto;
+    width: 100%;
 }
 
 /* Make mermaid diagram larger */
@@ -756,15 +761,23 @@ ul {
 /* STEPS */
 .steps {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
     margin-bottom: 48px;
 }
 
 .step {
+    background: var(--c-card);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 32px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .step.visible {
@@ -772,27 +785,36 @@ ul {
     transform: translateY(0);
 }
 
+.step:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    background: #181818;
+}
+
 .step__num {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 800;
     letter-spacing: 0.1em;
     color: var(--c-accent);
-    display: block;
-    margin-bottom: 12px;
+    display: inline-block;
+    margin-bottom: 16px;
+    opacity: 0.85;
 }
 
 .step h4 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #fff;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .step p {
     font-size: 0.88rem;
     color: var(--c-muted);
-    margin-bottom: 14px;
+    margin-bottom: 20px;
     line-height: 1.6;
+    flex: 1;
 }
 
 .step pre {
@@ -801,6 +823,20 @@ ul {
     border-radius: var(--r-sm);
     padding: 12px 16px;
     overflow-x: auto;
+}
+
+.step pre::-webkit-scrollbar {
+    height: 5px;
+}
+.step pre::-webkit-scrollbar-track {
+    background: #000;
+}
+.step pre::-webkit-scrollbar-thumb {
+    background: var(--c-dim);
+    border-radius: 4px;
+}
+.step pre::-webkit-scrollbar-thumb:hover {
+    background: var(--c-accent);
 }
 
 .step code {
@@ -961,8 +997,19 @@ ul {
 
 /* Responsive */
 @media (max-width: 1024px) {
+    /* Navbar compression on medium screens */
+    .nav__inner {
+        gap: 20px;
+        padding: 0 24px;
+    }
+
+    .nav__links {
+        gap: 16px;
+    }
+
     .arch-grid {
         grid-template-columns: 1fr;
+        gap: 40px;
     }
 
     .gallery-spotlight {
@@ -980,6 +1027,7 @@ ul {
     .preview-block,
     .preview-block--reverse {
         grid-template-columns: 1fr;
+        gap: 32px;
     }
 
     .preview-block--reverse .preview-block__frame {
@@ -988,6 +1036,18 @@ ul {
 
     .preview-block--reverse .preview-block__meta {
         order: 2;
+    }
+
+    .feature {
+        padding: 28px 24px;
+    }
+}
+
+@media (max-width: 992px) {
+    /* Collapse steps early so long pre elements don't squeeze and blow out */
+    .steps {
+        grid-template-columns: 1fr;
+        gap: 32px;
     }
 }
 
@@ -1009,6 +1069,12 @@ ul {
         gap: 40px;
         transition: right 0.3s ease;
         z-index: 101;
+        overflow-y: auto;
+        padding: 80px 24px;
+    }
+
+    .nav__links a {
+        font-size: 1.25rem;
     }
 
     .nav.nav--open .nav__links {
@@ -1042,32 +1108,46 @@ ul {
     }
 
     .hero {
+        padding-top: calc(var(--nav-h) + 60px);
+        padding-bottom: 60px;
         padding-left: 20px;
         padding-right: 20px;
+        min-height: auto;
     }
 
     .hero p {
         font-size: 1rem;
+        margin-bottom: 32px;
     }
 
     .hero__actions {
-        flex-direction: column;
+        gap: 12px;
     }
+
     .hero__icon {
-        height: 120px;
+        height: 110px;
         margin-bottom: 24px;
+    }
+
+    .hero__scroll {
+        display: none; /* Hide scroll bounce indicator on mobile */
     }
 
     .features {
         grid-template-columns: 1fr;
     }
 
-    .steps {
-        grid-template-columns: 1fr;
+    .step {
+        padding: 24px;
     }
 
     .stack-grid {
         grid-template-columns: 1fr;
+    }
+
+    .arch-diagram {
+        padding: 24px 16px;
+        min-height: auto;
     }
 
     .footer__inner {
@@ -1093,5 +1173,31 @@ ul {
 
     .gallery-thumbs {
         padding: 0 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Stacking hero actions & stats on very small phone displays */
+    .hero__actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero__actions .btn,
+    .hero__actions .badge {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .repo-stats {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .repo-stats .stat-item {
+        width: 100%;
+        justify-content: center;
     }
 }
