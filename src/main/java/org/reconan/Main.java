@@ -29,6 +29,20 @@ public class Main extends Application {
         // Print console banner
         ConsoleBanner.print();
 
+        // Ensure Database Exists (Create if not exists)
+        try {
+            DatabaseManager.getInstance().ensureDatabaseExists();
+        } catch (SQLException e) {
+            System.err.println("SQL Server: Failed to ensure database exists: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Connection/Creation Error");
+            alert.setHeaderText("Could not ensure database existence");
+            alert.setContentText("Please check your database server, username, password and configurations.\n\nError: " + e.getMessage());
+            alert.showAndWait();
+            Platform.exit();
+            return;
+        }
+
         // Verify database connection
         DatabaseConnection.checkConnection();
 
