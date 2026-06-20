@@ -35,11 +35,14 @@ Open the newly created `.env` file and replace the placeholder values with your 
 ### SQL Server Setup
 Once your `.env` file is ready, you can set up SQL Server either natively or using Docker.
 
+> [!NOTE]
+> ReConan automatically checks for and creates the target database (e.g., `ReConan`) and runs all schema initialization scripts on the first startup. You do not need to manually create the database, but manual creation instructions are included below if you prefer to set it up yourself.
+
 #### Option 1: Native Installation
 1. **Enable TCP/IP**: Open *SQL Server Configuration Manager*, go to *SQL Server Network Configuration* > *Protocols for MSSQLSERVER*, and set **TCP/IP** to **Enabled**.
 2. **Configure Port**: In *TCP/IP Properties* > *IP Addresses* tab, scroll to **IP All** and set **TCP Port** to `1433`.
 3. **Restart Service**: Restart the *SQL Server (MSSQLSERVER)* service.
-4. **Create Database**: Open *SQL Server Management Studio (SSMS)* and run:
+4. **Create Database (Optional)**: If you prefer to create it manually, open *SQL Server Management Studio (SSMS)* and run:
    ```sql
    CREATE DATABASE ReConan;
    ```
@@ -49,7 +52,7 @@ Once your `.env` file is ready, you can set up SQL Server either natively or usi
    ```bash
    docker-compose up -d
    ```
-2. **Create Database**: Run the following command to create the `ReConan` database inside the container (replace `your_password` with the `DB_PASSWORD` you just set in `.env`):
+2. **Create Database (Optional)**: If you prefer to create it manually, run the following command (replace `your_password` with the `DB_PASSWORD` you set in `.env`):
    ```bash
    docker exec -it reconan-db /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P your_password -Q "CREATE DATABASE ReConan" -C
    ```
