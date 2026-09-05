@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License"></a>
-  <a href="https://github.com/SBAI-Youness/ReConan/releases"><img src="https://img.shields.io/badge/version-v1.0-blue" alt="Version"></a>
+  <a href="https://github.com/SBAI-Youness/ReConan/releases"><img src="https://img.shields.io/badge/version-v1.1-blue" alt="Version"></a>
   <a href="https://en.wikipedia.org/wiki/Java_(programming_language)"><img src="https://img.shields.io/badge/language-Java-blue" alt="Language"></a>
   <a href="https://github.com/SBAI-Youness/ReConan/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen" alt="Contributions"></a>
 </p>
